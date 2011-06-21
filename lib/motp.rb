@@ -1,9 +1,9 @@
-require 'md5'
+require 'digest/md5'
 
 module Motp
   def self.otp(secret, pin, options = {})
     options = {:time => Time::now}.merge(options)
-    MD5::hexdigest("#{options[:time].utc.tv_sec.to_s[0...-1]}#{secret}#{pin}")[0,6]
+    Digest::MD5::hexdigest("#{options[:time].utc.tv_sec.to_s[0...-1]}#{secret}#{pin}")[0,6]
   end
 
   def self.check(secret, pin, otp, options = {})
