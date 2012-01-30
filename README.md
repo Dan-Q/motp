@@ -1,4 +1,4 @@
-MOTP
+motp
 ====
 
 This RubyGem implements the [Mobile-OTP standard](http://motp.sourceforge.net/) in Ruby,
@@ -21,7 +21,7 @@ PIN.
 
     require 'motp'
     
-    MOTP::check(secret, pin, otp)
+    Motp::check(secret, pin, otp)
 
 Returns true if the otp is valid for the specified secret and PIN, false otherwise.
 
@@ -38,12 +38,12 @@ Optional parameters (appended to the end):
 Client Implementation
 ---------------------
 
-If you want to write a mobile MOTP client in Ruby, go ahead! The MOTP RubyGem supports
+If you want to write a mobile-OTP client in Ruby, go ahead! The motp RubyGem supports
 this too.
 
     require 'motp'
     
-    MOTP::otp(secret, pin)
+    Motp::otp(secret, pin)
 
 Returns the OTP for the current time. As with the server implementation, you can pass an
 optional :time parameter to specify the time for wich you want to generate, but you
