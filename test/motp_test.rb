@@ -12,38 +12,38 @@ class MOTP_Test < Test::Unit::TestCase
   # end
 
   def test_otp_matches_regex
-    otp_now = MOTP::otp(@secret, @pin)
+    otp_now = Motp::otp(@secret, @pin)
     assert(otp_now =~ @valid_otp_regex)
   end
 
   def test_now
-    otp_now = MOTP::otp(@secret, @pin)
-    assert(MOTP::check(@secret, @pin, otp_now))
+    otp_now = Motp::otp(@secret, @pin)
+    assert(Motp::check(@secret, @pin, otp_now))
   end
 
   def test_2min_ago
-    otp = MOTP::otp(@secret, @pin, :time => Time::now - (2*60))
-    assert(MOTP::check(@secret, @pin, otp))
+    otp = Motp::otp(@secret, @pin, :time => Time::now - (2*60))
+    assert(Motp::check(@secret, @pin, otp))
   end
 
   def test_4min_ago_fails
-    otp = MOTP::otp(@secret, @pin, :time => Time::now - (4*60))
-    assert(!MOTP::check(@secret, @pin, otp))
+    otp = Motp::otp(@secret, @pin, :time => Time::now - (4*60))
+    assert(!Motp::check(@secret, @pin, otp))
   end
 
   def test_2min_ahead
-    otp = MOTP::otp(@secret, @pin, :time => Time::now + (2*60))
-    assert(MOTP::check(@secret, @pin, otp))
+    otp = Motp::otp(@secret, @pin, :time => Time::now + (2*60))
+    assert(Motp::check(@secret, @pin, otp))
   end
 
   def test_4min_ahead_fails
-    otp = MOTP::otp(@secret, @pin, :time => Time::now + (4*60))
-    assert(!MOTP::check(@secret, @pin, otp))
+    otp = Motp::otp(@secret, @pin, :time => Time::now + (4*60))
+    assert(!Motp::check(@secret, @pin, otp))
   end
 
   def test_various_random_otps_fail
     ['', '123456', 'abcdef', 'alpha' 'letmein!'].each do |otp|
-      assert(!MOTP::check(@secret, @pin, otp))
+      assert(!Motp::check(@secret, @pin, otp))
     end
   end
 
@@ -52,7 +52,7 @@ class MOTP_Test < Test::Unit::TestCase
     secret, pin = 'abcd1234', '1234'
     valid_otp = '6f8af8'
     invalid_otp = '5d60af'
-    assert(MOTP::check(secret, pin, valid_otp, :time => time))
-    assert(!MOTP::check(secret, pin, invalid_otp, :time => time))
+    assert(Motp::check(secret, pin, valid_otp, :time => time))
+    assert(!Motp::check(secret, pin, invalid_otp, :time => time))
   end
 end
