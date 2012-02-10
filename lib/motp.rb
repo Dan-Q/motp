@@ -8,7 +8,14 @@ module Motp
 
   def self.check(secret, pin, otp, options = {})
     options = {:time => Time::now, :max_period => (3 * 60)}.merge(options)
-    range = ((options[:time] - options[:max_period])..(options[:time] + options[:max_period]))
-    return range.any?{|time| otp == self.otp(secret, pin, :time => time)}
+    lower_limit = options[:time] - options[:max_period]
+    upper_limit = options[:time] + options[:max_period]
+
+    while lower_limit < upper_limit do
+      return true if otp == self.otp(secret, pin, :time => lower_limit)
+      lower_limit += 1
+    end
+
+    false
   end
 end
